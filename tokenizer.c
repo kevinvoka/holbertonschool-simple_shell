@@ -5,6 +5,7 @@ char **split_line(char *line)
 {
     size_t bufsize = 64, i = 0;
     char **tokens = malloc(bufsize * sizeof(char *));
+    char **new_tokens;
     char *tok;
 
     if (!tokens)
@@ -16,9 +17,13 @@ char **split_line(char *line)
         if (i + 1 >= bufsize)
         {
             bufsize *= 2;
-            tokens = realloc(tokens, bufsize * sizeof(char *));
-            if (!tokens)
+            new_tokens = realloc(tokens, bufsize * sizeof(char *));
+            if (!new_tokens)
+            {
+                free(tokens);
                 return NULL;
+            }
+            tokens = new_tokens;
         }
         tokens[i++] = tok;
         tok = strtok(NULL, " \t\r\n");
