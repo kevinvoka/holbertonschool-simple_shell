@@ -1,6 +1,19 @@
 #include "shell.h"
 
 /*
+ * print_error - Print error message to stderr
+ * @progname: Program name
+ * @cmd: Command that was not found
+ */
+static void print_error(const char *progname, const char *cmd)
+{
+    write(STDERR_FILENO, progname, strlen(progname));
+    write(STDERR_FILENO, ": 1: ", 5);
+    write(STDERR_FILENO, cmd, strlen(cmd));
+    write(STDERR_FILENO, ": not found\n", 12);
+}
+
+/*
  * execute_command:
  *  - Kontrollon nese komanda ekziston (resolve_command)
  *  - Nese nuk ekziston → printo error tek stderr dhe kthe 127 (standard "not found")
@@ -15,8 +28,7 @@ int execute_command(char **argv, char **env, const char *progname, int *last_sta
 
     if (!full)
     {
-    
-        dprintf(STDERR_FILENO, "%s: 1: %s: not found\n", progname, argv[0]);
+        print_error(progname, argv[0]);
         *last_status = 127;
         return 0;
     }
