@@ -20,7 +20,7 @@ int main(int argc, char **argv)
         char **args;
 
         if (interactive)
-            write(STDOUT_FILENO, "($) ", 4);
+            write(STDOUT_FILENO, ":) ", 3);
 
         r = getline(&line, &n, stdin);
         if (r == -1)
