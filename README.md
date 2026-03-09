@@ -1,38 +1,67 @@
-# Simple Shell
+# Holberton School — Simple Shell
+
+![Holberton](https://img.shields.io/badge/Holberton-School-red?style=flat-square) ![C](https://img.shields.io/badge/C-00599C?style=flat-square&logo=c)
 
 ## Description
-**Simple Shell** is a basic UNIX command line interpreter written in C, created as part of the Holberton School curriculum.  
-It mimics the behavior of the standard shell (`sh`) in both interactive and non-interactive modes.
 
-The shell:
-- Displays a prompt and waits for user input
-- Executes commands from the `PATH` or by absolute path
-- Handles command arguments
-- Implements built-in commands: `exit` and `env`
-- Handles the `EOF` (Ctrl+D) condition
-- Works in both interactive and non-interactive modes
+A custom UNIX command-line interpreter (**shell**) built in C from scratch. This project replicates core features of `/bin/sh`, including command parsing, process creation with `fork()`, and program execution with `execve()`.
 
----
+## Features
 
-## Compilation
-Compile the shell with:
+- Display a prompt and wait for user input
+- Execute commands with and without their full path
+- Handle the `PATH` environment variable
+- Built-in commands: `exit`, `env`
+- Handle `Ctrl+D` (EOF) gracefully
+- Support command arguments
+- Handle errors (command not found, permission denied)
+
+## How It Works
+
+```
+1. Print prompt "$ "
+2. Read user input with getline()
+3. Tokenize the input string
+4. Search for the command in PATH
+5. Fork a child process
+6. Execute the command with execve()
+7. Parent waits for child to finish
+8. Repeat
+```
+
+## Usage
+
 ```bash
+# Compile
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 
-Files
-main.c – Entry point and main loop
+# Interactive mode
+./hsh
+$ ls -la
+$ echo "Hello, World!"
+$ exit
 
-shell.c – Core shell functions
+# Non-interactive mode
+echo "ls -la" | ./hsh
+```
 
-execute.c – Command execution logic
+## Built-in Commands
 
-path.c – PATH resolution functions
+| Command | Description |
+|---------|-------------|
+| `exit` | Exit the shell |
+| `env` | Print environment variables |
 
-builtins.c – Built-in command handlers
+## Technologies
 
-utils.c – Helper functions
+| Tool | Version |
+|------|---------|
+| Ubuntu | 22.04 LTS |
+| GCC | 12.x |
+| Betty Linter | Latest |
+| Valgrind | 3.x |
 
-man_1_simple_shell – Manual page
+## Author
 
-Authors
-Kevin Voka
+**Kevin Voka** — [GitHub](https://github.com/kevinvoka)
+
